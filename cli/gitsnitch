@@ -41,8 +41,8 @@ if (program.setup) {
 		var url = 'http://app.gitsnitch.com/?pubKey=' + config.pubnubKeys.pubKey + '&subKey=' + config.pubnubKeys.subKey + '&projectKey=' +  config.projectKey + '&user=' + encodeURIComponent(config.developer.name);
 
 		console.log('\n');
-	    log.info('Snitch started... Watching current folder.');	
-	    log.info(url);
+	    log.info('Snitch started... Watching current folder.\n\n');
+	    log.info('Copy this url to your browser to connect:\n' + url);
 	    if (program.open) {
 	    	open(url);
 	    }
