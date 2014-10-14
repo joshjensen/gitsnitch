@@ -34,6 +34,7 @@ function promptForUserName(name, next) {
 	fields.Text({
 		default: name,
 	    promptLabel: 'What is your name?',
+	    desc: 'This must match your git config name. To check use "git config user.name" in the command line.',
 	   	validate: function (value) {
 			if (!value) {
 				throw new Error('Name is required.');
