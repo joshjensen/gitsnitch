@@ -1,8 +1,8 @@
 {
   "name": "gitsnitch",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A smart app for teams using git.",
-  "main": "cli/gitsnitch.js",
+  "main": "cli/gitsnitch",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +11,15 @@
     "gitsnitch": "./cli/gitsnitch",
     "snitch": "./cli/gitsnitch"
   },
-  "author": "Joshua Jensen",
+  "author": {
+    "name": "Josh Jensen",
+    "email": "me@joshjensen.com",
+    "url": "http://joshjensen.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/joshjensen/gitsnitch.git"
+  },  
   "license": "Apache Public License v2",
   "framework": "none",
   "preferGlobal": "true",
