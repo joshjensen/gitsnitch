@@ -39,7 +39,6 @@
     "pubnub": "^3.6.7",
     "underscore": "^1.7.0",
     "underscore.string": "^2.3.3",
-    "watch": "^0.11.0",
-    "watchr": "^2.4.11"
+    "watch": "^0.11.0"
   }
 }
