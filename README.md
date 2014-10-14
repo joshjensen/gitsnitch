@@ -1,4 +1,4 @@
 gitsnitch
 =========
 
-A smart app for teams. 
+Docs coming soon...
