@@ -70,6 +70,7 @@ function parseGitLogPretty(status) {
     var splitStatus = _.compact(status.split('hash:'));
     var gitHash = null;
     var gitDate = null;
+    var gitUser = null;
     var newArray = [];
 
     function processSplitStatus(item, index) {
@@ -88,6 +89,7 @@ function parseGitLogPretty(status) {
             var hashAndDate = item.split('~~');
             gitHash = _s.trim(hashAndDate[0]);
             gitDate = moment(new Date(_s.trim(hashAndDate[1]))).format('X');
+            gitUser = _s.trim(hashAndDate[2]);
             return;
         }
 
@@ -95,21 +97,23 @@ function parseGitLogPretty(status) {
         var fileHash = getFilenameHash(filePath);
         var fileGitHash = fileHash + gitHash;
 
-        newArray.push({
-            when: gitDate,
-            gitHash: gitHash,
-            fileHash: fileHash,
-            filePath: filePath,
-            status: getFileStatus(item),
-            updated: (!files[fileGitHash])
-        }); 
+        if (gitUser === config.developer.username) {
+            newArray.push({
+                when: gitDate,
+                gitHash: gitHash,
+                fileHash: fileHash,
+                filePath: filePath,
+                status: getFileStatus(item),
+                updated: (!files[fileGitHash])
+            });      
+        }
     }
 
     return newArray;
 }
 
 function getGitLogPretty(next) {
-    exec('git log --name-status --pretty=format:"hash:%h~~%cd" origin/master...HEAD', function (error, stdout, stderr) {
+    exec('git log --name-status --pretty=format:"hash:%h~~%cd~~%cn" origin/master...HEAD', function (error, stdout, stderr) {
         if (error !== null) {
             log.error('exec error: ' + error);
             return;
