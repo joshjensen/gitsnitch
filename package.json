@@ -1,6 +1,6 @@
 {
   "name": "gitsnitch",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "A smart app for teams using git.",
   "main": "cli/gitsnitch",
   "scripts": {
