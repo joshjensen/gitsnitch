@@ -56,7 +56,9 @@ function checkConfigFile(next) {
             checkIgnoreFile(0, next);
         });
     } else {
-        require('./setup').init(next);
+        require('./setup').init(function() {
+            checkConfigFile(next);
+        });
     }    
 }
 
