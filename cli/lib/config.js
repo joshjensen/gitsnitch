@@ -20,7 +20,9 @@ var exec = child_process.exec;
 var branch = 'master';
 
 var config = {};
-config.paths = ['**/*', '**/.*', '**/.git/*'];
+// TODO: Get GAZE working again.
+// config.paths = ['**/*', '**/.*', '**/.git/*'];
+config.paths = [];
 
 var ignoreFiles = ['.gitignore', '.snitchignore'];
 
@@ -78,10 +80,14 @@ function checkIgnoreFile(index, next) {
                 if (fs.existsSync(lineAsString)) {
                     var fileStat = fs.statSync(lineAsString);
                     if (fileStat.isDirectory()) {
-                        config.paths.push('!' + path.normalize(lineAsString) + '/**/*' );
+                        // TODO: Get GAZE working again.
+                        // config.paths.push('!' + path.normalize(lineAsString) + '/**/*' );
+                        config.paths.push(path.normalize(lineAsString));
                     }
                     if (fileStat.isFile()) {
-                        config.paths.push('!**/' + lineAsString);
+                        // TODO: Get GAZE working again.
+                        // config.paths.push('!**/' + lineAsString);
+                        config.paths.push(lineAsString);
                     }
                 }
             }).sum(function() {

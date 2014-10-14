@@ -6,10 +6,11 @@
 var fs = require('fs');
 var crypto = require('crypto');
 
-var gaze = require('gaze');
+// var gaze = require('gaze');
 var lazy = require('lazy');
 var _ = require('underscore');
 var moment = require('moment');
+var watch = require('watch');
 var _s = require('underscore.string');
 var child_process = require('child_process');
 
@@ -97,7 +98,7 @@ function parseGitLogPretty(status) {
         var fileHash = getFilenameHash(filePath);
         var fileGitHash = fileHash + gitHash;
 
-        if (gitUser === config.developer.username) {
+        if (gitUser === config.developer.name) {
             newArray.push({
                 when: gitDate,
                 gitHash: gitHash,
@@ -232,23 +233,46 @@ function onNewConnection() {
     onFileEvent('newConnection', 'none'); 
 }
 
-var throttleOnEvent = _.throttle(onFileEvent, 10, {leading: false});
+var throttleOnEvent = _.debounce(onFileEvent, 50);
+
+function filterDir(path, stat) {
+    return (!config.paths.some(function(item) {
+        return (new RegExp('\\b' + item + '\\b')).test(path);
+    }));
+}
 
 watcher.start = function(next) {
 	// We need to initialize pubnub here to make sure the config is set.
 	pubnub = require('./pubnub');
     config = require('./config');
 
-    var responder;
-    gaze(config.paths, {cwd: process.cwd(), interval: 50}, function(err, watcher) {
-        // this.on('all', throttleOnEvent);
-        this.on('all', function(event, filepath) {
-            if (!responder) responder = setTimeout(function() {
-                throttleOnEvent(event, filepath);
-                responder = undefined;
-            }, 20);
+    watch.createMonitor(process.cwd(), {filter: filterDir}, function (monitor) {
+        monitor.on("created", function (f, stat) {
+            throttleOnEvent('created', f);
+        });
+        monitor.on("changed", function (f, curr, prev) {
+            throttleOnEvent('changed', f);
+        });
+        monitor.on("removed", function (f, stat) {
+            throttleOnEvent('removed', f);
         });
     });
+
+    /**
+    TODO: Get GAZE working again. For some reason GAZE crashes when too many files are changed.
+    Watch works perfectlty. But is much slower to respond.
+    **/
+
+    // var responder;
+    // gaze(config.paths, {cwd: process.cwd(), interval: 50}, function(err, watcher) {
+    //     // this.on('all', throttleOnEvent);
+    //     this.on('all', function(event, filepath) {
+    //         if (!responder) responder = setTimeout(function() {
+    //             throttleOnEvent(event, filepath);
+    //             responder = undefined;
+    //         }, 20);
+    //     });
+    // });
 
     pubnub.subscribe({
         channel: config.projectKey + '-filestat',
