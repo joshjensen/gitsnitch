@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+/*
+ * Copyright (c) 2014 Pixel Flavor LLC. All Rights Reserved.
+ * Please see the LICENSE file included with this distribution for details.
+ */
+var fs = require('fs');
+
+var open = require('open');
+var program = require('commander');
+var flow = require('gowiththeflow');
+
+var config = require('./lib/config');
+var watcher = require('./lib/watcher');
+var log = require('./lib/log');
+
+var pjson = require('./../package.json');
+
+program
+    .version(pjson.version)
+    .option('--setup', 'Setup this application folder to work with GitSnitch')
+    .option('-o, --open', 'Open default browser with credentials')
+    .parse(process.argv);
+
+
+if (!fs.existsSync('.git')) {
+    log.error('\n');
+    log.error('A git project was not detected. Please run "snitch" again in a directory containing a git project.');
+    log.error('\n');
+    process.kill();
+    return;
+}
+
+if (program.setup) {
+	require('./lib/setup').init();
+} else {
+	config.setup(function() {
+		watcher.start();
+		config = require('./lib/config');
+		
+		var url = 'http://app.gitsnitch.com/?pubKey=' + config.pubnubKeys.pubKey + '&subKey=' + config.pubnubKeys.subKey + '&projectKey=' +  config.projectKey + '&user=' + encodeURIComponent(config.developer.name);
+
+		console.log('\n');
+	    log.info('Snitch started... Watching current folder.');	
+	    log.info(url);
+	    if (program.open) {
+	    	open(url);
+	    }
+	});	
+}

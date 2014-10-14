@@ -1,0 +1,35 @@
+{
+  "name": "gitsnitch",
+  "version": "0.0.1",
+  "description": "A smart app for teams using git.",
+  "main": "cli/gitsnitch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "directories": {},
+  "bin": {
+    "gitsnitch": "./cli/gitsnitch",
+    "snitch": "./cli/gitsnitch"
+  },
+  "author": "Joshua Jensen",
+  "license": "Apache Public License v2",
+  "framework": "none",
+  "preferGlobal": "true",
+  "dependencies": {
+    "chalk": "^0.5.1",
+    "commander": "^2.3.0",
+    "fields": "^0.1.17",
+    "gaze": "^0.6.4",
+    "gowiththeflow": "^1.0.0",
+    "hashids": "^1.0.1",
+    "jsonfile": "^2.0.0",
+    "lazy": "^1.0.11",
+    "moment": "^2.8.3",
+    "nodegit": "^0.1.4",
+    "open": "0.0.5",
+    "prompt": "^0.2.14",
+    "pubnub": "^3.6.7",
+    "underscore": "^1.7.0",
+    "underscore.string": "^2.3.3"
+  }
+}
