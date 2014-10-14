@@ -1,6 +1,6 @@
 {
   "name": "gitsnitch",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A smart app for teams using git.",
   "main": "cli/gitsnitch",
   "scripts": {
@@ -19,7 +19,7 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/joshjensen/gitsnitch.git"
-  },  
+  },
   "license": "Apache Public License v2",
   "framework": "none",
   "preferGlobal": "true",
@@ -38,6 +38,8 @@
     "prompt": "^0.2.14",
     "pubnub": "^3.6.7",
     "underscore": "^1.7.0",
-    "underscore.string": "^2.3.3"
+    "underscore.string": "^2.3.3",
+    "watch": "^0.11.0",
+    "watchr": "^2.4.11"
   }
 }
