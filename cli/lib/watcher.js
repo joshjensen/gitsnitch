@@ -87,7 +87,7 @@ function parseGitLogPretty(status) {
         if (index === 0) {
             var hashAndDate = item.split('~~');
             gitHash = _s.trim(hashAndDate[0]);
-            gitDate = moment(_s.trim(hashAndDate[1])).format('X');
+            gitDate = moment(new Date(_s.trim(hashAndDate[1]))).format('X');
             return;
         }
 
